@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Microblog</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
     <header class="navbar">
         <div class="navbar__brand">
-            <img src="logo.svg" alt="The Microblog logo" class="navbar__logo"/>Microblog
+            <img src="/static/logo.svg" alt="The Microblog logo" class="navbar__logo"/>Microblog
         </div>
         <ul class="navbar__navigation">
             <li class="navbar__navigation--item"><a href="#" class="navbar__link">Recent</a></li>
@@ -20,7 +20,7 @@
     <main class="main">
         <section>
             <h1>Add new entry</h1>
-            <form class="form" action="/entry" method="POST">
+            <form class="form" method="POST">
                 <p class="form__input">  
                     <label for="entry" class="form__label">Entry contents:</label>
                     <textarea name="content" id="entry" class="form__textarea"></textarea>
@@ -30,15 +30,17 @@
         </section>
         <section>
             <h1>Recent posts</h1>
-            <article class="entry">
-                <div>
-                    <h2 class="entry__title">Last month I had</h2>
-                    <time datetime="24-10-2019" class="entry__date">• Oct 24</time>
-                </div>
-                <p class="entry__content">
-                    Last month I had the luxury of going on my first holiday in almost 2 years, which was a very welcome break
-                </p>
-            </article>
+            {% for entry in entries %}
+                <article class="entry">
+                    <div>
+                        <h2 class="entry__title">{{ entry[0] | truncate(30, true) }}</h2>
+                        <time datetime="{{ entry[1] }}" class="entry__date">• {{ entry[2] }}</time>
+                    </div>
+                    <p class="entry__content">
+                        {{ entry[0] }}
+                    </p>
+                </article>
+            {% endfor %}
         </section>
     </main>
     <footer class="footer">
